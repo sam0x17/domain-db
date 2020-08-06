@@ -22,6 +22,8 @@ DomainDB.tld_extensions.includes?("ninja").should eq true
 DomainDB.tld_extensions.includes?("co.uk").should eq false # not top level
 ```
 
+Also see specs for usage for `DomainDB.strip_subdomains` and `DomainDB.strip_suffix`.
+
 ## Installation
 
 Add the following to your `shards.yml` file:
