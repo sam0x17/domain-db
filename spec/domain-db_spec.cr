@@ -1,11 +1,11 @@
 require "./spec_helper"
 
-describe TLD::DB do
+describe DomainDB do
   # TODO: Write tests
 
-  it "updates correctly" do
-    TLD::DB.update
-    extensions = TLD::DB.extensions
+  it "updates TLD list correctly" do
+    DomainDB.update_tlds
+    extensions = DomainDB.tld_extensions
     (extensions.size > 100).should eq true
     extensions.includes?("com").should eq true
     extensions.includes?("actor").should eq true

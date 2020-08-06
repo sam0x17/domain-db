@@ -1,2 +1,2 @@
 require "spec"
-require "../src/tld-db"
+require "../src/domain-db"
