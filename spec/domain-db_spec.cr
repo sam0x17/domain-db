@@ -50,7 +50,19 @@ describe DomainDB do
     end
 
     it "leaves unrecognized extensions unchanged" do
-      DomainDB.strip_subdomains("sub.domain.nonexistentextension").should eq "sub.domain.nonexistentextension"
+      DomainDB.strip_subdomains("sub.dOmain.nonexistentextension").should eq "sub.domain.nonexistentextension"
+    end
+  end
+
+  describe "#strip_suffix" do
+    it "handles a variety of hostnames" do
+      DomainDB.strip_suffix("whatever-ok.my-blog.ok.yeah.yuh.co.uk").should eq "whatever-ok.my-blog.ok.yeah.yuh"
+      DomainDB.strip_suffix("sAm0x17.dev").should eq "sam0x17"
+      DomainDB.strip_suffix("mywebsite.com.mx").should eq "mywebsite"
+    end
+
+    it "leaves unrecognized extensions unchanged" do
+      DomainDB.strip_suffix("sub.domain.nOnexistentextension").should eq "sub.domain.nonexistentextension"
     end
   end
 end

@@ -98,4 +98,17 @@ module DomainDB
     end
     return hostname.downcase
   end
+
+  # removes the domain extension / suffix from the end of the specified
+  # hostname. Follows the same options and semantics as `#strip_subdomains`.
+  def self.strip_suffix(hostname : String, tld_only = false) : String
+    set = tld_only ? self.tld_extensions : self.suffixes
+    (tld_only ? self.update_tlds : self.update_suffixes) if set.empty?
+    tokens = hostname.downcase.split(".")
+    (0..(tokens.size - 1)).each do |i|
+      extension = tokens[i..].join(".")
+      return tokens[0..(i - 1)].join(".") if self.suffixes.includes?(extension)
+    end
+    return hostname.downcase
+  end
 end
