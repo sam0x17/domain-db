@@ -34,4 +34,23 @@ describe DomainDB do
     pp! (extensions - suffixes)
     (extensions - suffixes).size.should eq 0
   end
+
+  describe "#strip_subdomains" do
+    it "works on standard top level domains" do
+      DomainDB.strip_subdomains("sam0x17.dev").should eq "sam0x17.dev"
+      DomainDB.strip_subdomains("OMG-LOL.net").should eq "omg-lol.net"
+      DomainDB.strip_subdomains("forum.durosoft.com").should eq "durosoft.com"
+      DomainDB.strip_subdomains("resume.sam0x17.dev").should eq "sam0x17.dev"
+      DomainDB.strip_subdomains("co.uk.some-cool.thing-ok.example.com").should eq "example.com"
+    end
+
+    it "works on fancy compound domains" do
+      DomainDB.strip_subdomains("awesome-site.bro.co.uk").should eq "bro.co.uk"
+      DomainDB.strip_subdomains("my.fancy-blog.com.mx").should eq "fancy-blog.com.mx"
+    end
+
+    it "leaves unrecognized extensions unchanged" do
+      DomainDB.strip_subdomains("sub.domain.nonexistentextension").should eq "sub.domain.nonexistentextension"
+    end
+  end
 end
