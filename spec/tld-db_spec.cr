@@ -1,9 +1,12 @@
 require "./spec_helper"
 
-describe Tld::Db do
+describe TLD::DB do
   # TODO: Write tests
 
-  it "works" do
-    false.should eq(true)
+  it "updates correctly" do
+    TLD::DB.update
+    extensions = TLD::DB.extensions
+    (extensions.size > 100).should eq true
+    extensions.includes?("com").should eq true
   end
 end
