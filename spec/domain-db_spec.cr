@@ -10,7 +10,8 @@ describe DomainDB do
     extensions.includes?("com").should eq true
     extensions.includes?("actor").should eq true
     extensions.includes?("io").should eq true
-    extensions.includes?("com.mx").should eq false # these aren't top-level
+    extensions.includes?("com.mx").should eq false # not top level
+    extensions.includes?("co.uk").should eq false # not top level
   end
 
   it "updates suffixes list correctly" do

@@ -1,39 +1,32 @@
-# tld-db
+# DomainDB
 
-TODO: Write a description here
-
-## Installation
-
-1. Add the dependency to your `shard.yml`:
-
-   ```yaml
-   dependencies:
-     tld-db:
-       github: your-github-user/tld-db
-   ```
-
-2. Run `shards install`
+Contains a dynamically updated database of top level domain extensions (from IANA)
+and the public suffixes list from Mozilla.
 
 ## Usage
 
 ```crystal
-require "tld-db"
+require "domain-db"
+
+# suffix list contains everything
+DomainDB.update_suffixes
+DomainDB.suffixes.includes?("com.mx").should eq true
+DomainDB.suffixes.includes?("net").should eq true
+DomainDB.tld_extensions.includes?("ninja").should eq true
+
+# tld list just contains top level domains according to IANA
+DomainDB.update_tlds
+DomainDB.tld_extensions.includes?("com.mx").should eq false # not top level
+DomainDB.tld_extensions.includes?("net").should eq true
+DomainDB.tld_extensions.includes?("ninja").should eq true
+DomainDB.tld_extensions.includes?("co.uk").should eq false # not top level
 ```
 
-TODO: Write usage instructions here
+## Installation
 
-## Development
-
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it (<https://github.com/your-github-user/tld-db/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [your-name-here](https://github.com/your-github-user) - creator and maintainer
+Add the following to your `shards.yml` file:
+```yaml
+dependencies:
+  domain-db:
+    github: sam0x17/domain-db
+```
